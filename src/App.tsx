@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
+import {TodoList} from './TodoList';
 
 function App() {
     return (
         <div className="App">
-            <div className='todolist'>
+            <div className="todolist">
                 <h3>What to learn</h3>
                 <div>
                     <input/>
@@ -21,6 +22,9 @@ function App() {
                     <button>Completed</button>
                 </div>
             </div>
+            <TodoList/>
+            <TodoList/>
+            <TodoList/>
         </div>
     );
 }
