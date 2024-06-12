@@ -11,8 +11,11 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const TodoList: React.FC<TodoListPropsType> = (props) => {
-    const {title, tasks, ...restProps} = props
+export const TodoList: React.FC<TodoListPropsType> = (
+    {
+        title,
+        tasks
+    }) => {
     return (
         <div className="todolist">
             <h3>{title}</h3>
