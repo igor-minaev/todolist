@@ -1,4 +1,5 @@
 import {JSX} from "react";
+import {Button} from "./Button.tsx";
 
 type PropsType = {
     title: string
@@ -27,13 +28,17 @@ export const Todolist = ({title, tasks}: PropsType) => {
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button title="+"/>
+                {/*<button>+</button>*/}
             </div>
             {tasksList}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button title="All"/>
+                <Button title="Active"/>
+                <Button title="Completed"/>
+                {/*<button>All</button>*/}
+                {/*<button>Active</button>*/}
+                {/*<button>Completed</button>*/}
             </div>
         </div>
     );
