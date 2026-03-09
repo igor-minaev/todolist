@@ -2,10 +2,11 @@ import {JSX} from "react";
 
 type ButtonType = {
     title: string
+    onClick?: () => void
 }
 
-export function Button({title}: ButtonType): JSX.Element {
+export function Button({title, onClick}: ButtonType): JSX.Element {
     return (
-        <button>{title}</button>
+        <button onClick={onClick}>{title}</button>
     )
 }

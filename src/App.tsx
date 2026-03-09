@@ -1,6 +1,10 @@
 import './App.css'
-import {TaskType, Todolist} from "./Todolist.tsx";
+import {Todolist} from "./Todolist.tsx";
 import {useState} from "react";
+import {getFilteredTasks} from "./utils.ts";
+import {FilterValuesType, TaskType} from "./types.ts";
+
+
 
 function App() {
     // data
@@ -14,10 +18,32 @@ function App() {
         {id: 11, title: "RTK", isDone: false},
     ])
 
+    const [filter, setFilter] = useState<FilterValuesType>("all")
+
+    const deleteTask = (taskId: TaskType["id"]) => {
+        const nextState: TaskType[] = tasks.filter(t => t.id !== taskId)
+        setTasks(nextState)
+    }
+
+    const changeTodolistFilter = (filter: FilterValuesType) => {
+        setFilter(filter)
+    }
+
+    // const getFilteredTasks = () => {
+    //     let filteredTasks = tasks
+    //     if (filter === "active") {
+    //         filteredTasks = tasks.filter(t => !t.isDone)
+    //     }
+    //     if (filter === "completed") {
+    //         filteredTasks = tasks.filter(t => t.isDone)
+    //     }
+    //     return filteredTasks
+    // }
+
 
     return (
         <div className="app">
-            <Todolist title={todolistTitle} tasks={tasks}/>
+            <Todolist title={todolistTitle} tasks={getFilteredTasks(tasks, filter)} deleteTask={deleteTask} changeTodolistFilter={changeTodolistFilter}/>
         </div>
     )
 }
