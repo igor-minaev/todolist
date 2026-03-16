@@ -1,6 +1,6 @@
 import './App.css'
 import {Todolist} from "./Todolist.tsx";
-import {useRef, useState} from "react";
+import { useState} from "react";
 import {getFilteredTasks} from "./utils.ts";
 import {FilterValuesType, TaskType} from "./types.ts";
 import {v1} from "uuid";
@@ -34,7 +34,6 @@ function App() {
         }
         const nextState: TaskType[] = [...tasks, newTask]
         setTasks(nextState)
-        // tasksNumber.current += 1
     }
 
     const changeTodolistFilter = (filter: FilterValuesType) => {
@@ -56,7 +55,6 @@ function App() {
     return (
         <div className="app">
             <Todolist
-                // tasksNumber={tasksNumber.current}
                 title={todolistTitle}
                 tasks={getFilteredTasks(tasks, filter)}
                 deleteTask={deleteTask}
