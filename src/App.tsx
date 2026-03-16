@@ -3,7 +3,7 @@ import {Todolist} from "./Todolist.tsx";
 import {useState} from "react";
 import {getFilteredTasks} from "./utils.ts";
 import {FilterValuesType, TaskType} from "./types.ts";
-
+import {v1} from "uuid";
 
 
 function App() {
@@ -22,6 +22,16 @@ function App() {
 
     const deleteTask = (taskId: TaskType["id"]) => {
         const nextState: TaskType[] = tasks.filter(t => t.id !== taskId)
+        setTasks(nextState)
+    }
+
+    const createTask = (title: TaskType["title"]) => {
+        const newTask: TaskType = {
+            id: v1(),
+            title: title,
+            isDone: false
+        }
+        const nextState: TaskType[] = [...tasks, newTask]
         setTasks(nextState)
     }
 
