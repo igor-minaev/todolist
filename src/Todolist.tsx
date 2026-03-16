@@ -1,4 +1,4 @@
-import {JSX} from "react";
+import {JSX, useRef} from "react";
 import {Button} from "./Button.tsx";
 import {FilterValuesType, TaskType} from "./types.ts";
 
@@ -7,10 +7,14 @@ type PropsType = {
     tasks: TaskType[]
     deleteTask: (taskId: TaskType["id"]) => void
     changeTodolistFilter: (filter: FilterValuesType) => void
+    createTask: (title: TaskType["title"]) => void
+    // tasksNumber: number
 }
 
 
-export const Todolist = ({title, tasks, deleteTask, changeTodolistFilter}: PropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeTodolistFilter, createTask}: PropsType) => {
+
+    const taskInputRef = useRef<HTMLInputElement>(null)
 
     const tasksList: JSX.Element = tasks.length
         ? <ul>
@@ -27,8 +31,13 @@ export const Todolist = ({title, tasks, deleteTask, changeTodolistFilter}: Props
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button title="+"/>
+                <input ref={taskInputRef}/>
+                <Button title="+" onClick={() => {
+                    if (taskInputRef.current) {
+                        createTask(taskInputRef.current.value)
+                        taskInputRef.current.value = ""
+                    }
+                }}/>
                 {/*<button>+</button>*/}
             </div>
             {tasksList}
