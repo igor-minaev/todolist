@@ -1,6 +1,6 @@
 import './App.css'
 import {Todolist} from "./Todolist.tsx";
-import { useState} from "react";
+import {useState} from "react";
 import {getFilteredTasks} from "./utils.ts";
 import {FilterValuesType, TaskType} from "./types.ts";
 import {v1} from "uuid";
@@ -40,6 +40,10 @@ function App() {
         setFilter(filter)
     }
 
+    const changeTaskStatus = (taskId: TaskType['id'], isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    }
+
     // const getFilteredTasks = () => {
     //     let filteredTasks = tasks
     //     if (filter === "active") {
@@ -59,7 +63,10 @@ function App() {
                 tasks={getFilteredTasks(tasks, filter)}
                 deleteTask={deleteTask}
                 changeTodolistFilter={changeTodolistFilter}
-                createTask={createTask}/>
+                createTask={createTask}
+                changeTaskStatus={changeTaskStatus}
+            />
+
         </div>
     )
 }
