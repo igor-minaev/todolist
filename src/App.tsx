@@ -60,6 +60,7 @@ function App() {
         <div className="app">
             <Todolist
                 title={todolistTitle}
+                filter={filter}
                 tasks={getFilteredTasks(tasks, filter)}
                 deleteTask={deleteTask}
                 changeTodolistFilter={changeTodolistFilter}

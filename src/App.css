@@ -1,8 +1,30 @@
 .app {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .app > div {
-  margin-right: 50px;
+    margin-right: 50px;
+}
+
+.task {
+    font-weight: bold;
+}
+
+.task-done {
+    font-style: italic;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.btn-filter-active {
+    background-color: crimson;
+    color: #fff;
+    border: 3px solid crimson;
+    border-radius: 3px;
+}
+
+.task-input-error {
+    border: 2px solid red;
+    outline: none;
 }
