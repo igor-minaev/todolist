@@ -44,17 +44,6 @@ function App() {
         setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
     }
 
-    // const getFilteredTasks = () => {
-    //     let filteredTasks = tasks
-    //     if (filter === "active") {
-    //         filteredTasks = tasks.filter(t => !t.isDone)
-    //     }
-    //     if (filter === "completed") {
-    //         filteredTasks = tasks.filter(t => t.isDone)
-    //     }
-    //     return filteredTasks
-    // }
-
 
     return (
         <div className="app">
