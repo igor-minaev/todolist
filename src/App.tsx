@@ -69,9 +69,18 @@ function App() {
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistId))
         const copyTasksState = {...tasks}
-        delete tasks[todolistId]
+        delete copyTasksState[todolistId]
         setTasks(copyTasksState)
+    }
 
+    const createTodolist = (title: TodolistType['title']) => {
+        const newTodolist: TodolistType = {
+            id: crypto.randomUUID(),
+            title,
+            filter: 'all'
+        }
+        setTodolists([...todolists, newTodolist])
+        setTasks({...tasks, [newTodolist.id]: []})
     }
 
     const todolistComponents = todolists.map(tl => (
