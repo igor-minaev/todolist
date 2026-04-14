@@ -4,6 +4,7 @@ import {useState} from "react";
 import {getFilteredTasks} from "./utils.ts";
 import {FilterValuesType, TaskType} from "./types.ts";
 import {v1} from "uuid";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 export type TodolistType = {
     id: string
@@ -58,12 +59,21 @@ function App() {
         setTasks({...tasks, [todolistId]: [...tasks[todolistId], newTask]})
     }
 
+    const changeTaskStatus = (taskId: TaskType['id'], isDone: TaskType['isDone'], todolistId: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
+    }
+
+    const changeTaskTitle = (taskId: TaskType['id'], title: TaskType['title'], todolistId: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
+    }
+
+
     const changeTodolistFilter = (filter: FilterValuesType, todolistId: string) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
 
-    const changeTaskStatus = (taskId: TaskType['id'], isDone: boolean, todolistId: string) => {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
+    const changeTodolistTitle = (title: TodolistType['title'], todolistId: string) => {
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
     }
 
     const deleteTodolist = (todolistId: string) => {
@@ -74,13 +84,14 @@ function App() {
     }
 
     const createTodolist = (title: TodolistType['title']) => {
+        const newTodolistId = crypto.randomUUID()
         const newTodolist: TodolistType = {
-            id: crypto.randomUUID(),
+            id: newTodolistId,
             title,
             filter: 'all'
         }
         setTodolists([...todolists, newTodolist])
-        setTasks({...tasks, [newTodolist.id]: []})
+        setTasks({...tasks, [newTodolistId]: []})
     }
 
     const todolistComponents = todolists.map(tl => (
@@ -94,11 +105,14 @@ function App() {
                   createTask={createTask}
                   changeTaskStatus={changeTaskStatus}
                   deleteTodolist={deleteTodolist}
+                  changeTodolistTitle={changeTodolistTitle}
+                  changeTaskTitle={changeTaskTitle}
         />
     ))
 
     return (
         <div className="app">
+            <CreateItemForm createTitle={createTodolist} minTitleLength={5} maxTitleLength={10}/>
             {todolistComponents}
         </div>
     )
