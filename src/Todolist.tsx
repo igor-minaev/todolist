@@ -1,9 +1,17 @@
 import {ChangeEvent, JSX} from "react";
-import {Button} from "./Button.tsx";
+// import {Button} from "./Button.tsx";
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {FilterValuesType, TaskType} from "./types.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import {TodolistType} from "./App.tsx";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Checkbox from '@mui/material/Checkbox';
+import {Box, Typography} from "@mui/material";
+import {containerSx, getListItemSx} from "./Todolist.style.ts";
 
 type PropsType = {
     id: string
@@ -35,19 +43,28 @@ export const Todolist = ({
                          }: PropsType) => {
 
     const tasksList: JSX.Element = tasks.length
-        ? <ul>
+        ? <List>
             {tasks.map(task => {
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked, id)
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle(task.id, title, id)
                 return (
-                    <li key={task.id}>
-                        <input type="checkbox" onChange={changeTaskStatusHandler} checked={task.isDone}/>
-                        <EditableSpan title={task.title} editeItemTitle={changeTaskTitleHandler} spanClassName={task.isDone ? "task-done" : "task"}/>
-                        <Button title="x" onClick={() => deleteTask(task.id, id)}/>
-                    </li>
+                    <ListItem disablePadding key={task.id} sx={containerSx}>
+                        <Box sx={{display: 'flex', alignItems: 'center'}}>
+                            <Checkbox size="medium" onChange={changeTaskStatusHandler} checked={task.isDone}/>
+                            <Box sx={getListItemSx(task.isDone)}>
+                                <EditableSpan title={task.title}
+                                              editeItemTitle={changeTaskTitleHandler}
+                                              // spanClassName={task.isDone ? "task-done" : "task"}
+                                />
+                            </Box>
+                        </Box>
+                        <IconButton onClick={() => deleteTask(task.id, id)}>
+                            <HighlightOffIcon/>
+                        </IconButton>
+                    </ListItem>
                 )
             })}
-        </ul>
+        </List>
         : <span>Your tasksList is empty</span>
 
     const createTaskHandler = (taskTitle: TaskType['title']) => createTask(taskTitle, id)
@@ -56,19 +73,21 @@ export const Todolist = ({
 
     return (
         <div>
-            <h3>
+            <Typography align='center' variant="h5" sx={{fontWeight: 'bold'}}>
                 <EditableSpan title={title} editeItemTitle={changeTodolistTitleHandler}/>
-                <Button title="x" onClick={() => deleteTodolist(id)}/>
-            </h3>
+                <IconButton onClick={() => deleteTodolist(id)}>
+                    <HighlightOffIcon/>
+                </IconButton>
+            </Typography>
             <CreateItemForm createTitle={createTaskHandler}/>
             {
                 tasksList
             }
-            <div>
-                <Button className={filter === "all" ? "btn-filter-active" : ""} title="All" onClick={() => changeTodolistFilter("all", id)}/>
-                <Button className={filter === "active" ? "btn-filter-active" : ""} title="Active" onClick={() => changeTodolistFilter("active", id)}/>
-                <Button className={filter === "completed" ? "btn-filter-active" : ""} title="Completed" onClick={() => changeTodolistFilter("completed", id)}/>
-            </div>
+            <Box sx={containerSx}>
+                <Button size='small' variant={filter === "all" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("all", id)}>All</Button>
+                <Button size='small' variant={filter === "active" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("active", id)}>Active</Button>
+                <Button size='small' variant={filter === "completed" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("completed", id)}>Completed</Button>
+            </Box>
         </div>
     )
         ;

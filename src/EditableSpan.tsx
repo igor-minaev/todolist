@@ -1,4 +1,5 @@
 import {useState} from "react";
+import TextField from '@mui/material/TextField';
 
 type EditableSpanPropsTitle = {
     title: string
@@ -16,12 +17,11 @@ export const EditableSpan = ({title, editeItemTitle, spanClassName}: EditableSpa
     return (
         <>
             {isEdit
-                ? <input
-                    autoFocus
-                    value={itemTitle}
-                    onBlur={offEdit}
-                    onKeyDown={(e) => e.key === 'Enter' && offEdit()}
-                    onChange={(e) => setItemTitle(e.currentTarget.value)}/>
+                ? <TextField variant="standard" autoFocus
+                             value={itemTitle}
+                             onBlur={offEdit}
+                             onKeyDown={(e) => e.key === 'Enter' && offEdit()}
+                             onChange={(e) => setItemTitle(e.currentTarget.value)}/>
                 : <span className={spanClassName} onDoubleClick={onEdit}>{title}</span>}
         </>
     );

@@ -1,5 +1,7 @@
-import {Button} from "./Button.tsx";
 import {ChangeEvent, useState} from "react";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 
 type CreateItemFormPropsType = {
     createTitle: (title: string) => void
@@ -30,25 +32,25 @@ export const CreateItemForm = ({createTitle, minTitleLength = 3, maxTitleLength 
 
     return (
         <div>
-            <input
-                className={error ? "task-input-error" : ""}
-                value={titleInputValue}
-                onChange={setTitleInputHandler}
-                onKeyDown={(e) => {
-                    e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
-                }}
-            />
-            <Button disabled={isTaskTitleLengthNotValid}
-                    title="+" onClick={createTitleHandler}/>
-            {error && <div style={{color: "red"}}>enter valid title</div>}
+            <TextField size='small'
+                       value={titleInputValue}
+                       onChange={setTitleInputHandler}
+                       onKeyDown={(e) => {
+                           e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
+                       }}
+                       helperText={error && <div style={{color: "red"}}>enter valid title</div>}
+                       error={error}/>
+            <IconButton size="medium" disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
+                <AddBoxIcon/>
+            </IconButton>
+            {/*{error && <div style={{color: "red"}}>enter valid title</div>}*/}
             {/*<button>+</button>*/}
             {error || titleInputValue.length < minTitleLength &&
                 <p>min title length is {minTitleLength} chars</p>}
             {titleInputValue.length >= minTitleLength && titleInputValue.length <= maxTitleLength &&
                 < p> max title length is {maxTitleLength} chars</p>}
             {titleInputValue.length > maxTitleLength && <p style={{color: "red"}}>max title is too long
-            </p>
-            }
+            </p>}
         </div>
     );
 };
