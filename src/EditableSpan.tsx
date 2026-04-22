@@ -17,7 +17,8 @@ export const EditableSpan = ({title, editeItemTitle, spanClassName}: EditableSpa
     return (
         <>
             {isEdit
-                ? <TextField variant="standard" autoFocus
+                ? <TextField variant="standard"
+                             autoFocus
                              value={itemTitle}
                              onBlur={offEdit}
                              onKeyDown={(e) => e.key === 'Enter' && offEdit()}

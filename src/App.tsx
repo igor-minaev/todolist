@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import {NavButton} from "./NavButton.ts";
 import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
 import {containerSx} from "./Todolist.style.ts";
+import {purple, amber} from "@mui/material/colors";
 
 export type TodolistType = {
     id: string
@@ -128,9 +129,8 @@ function App() {
 
     const theme = createTheme({
         palette: {
-            primary: {
-                main: '#087EA4',
-            },
+            primary: purple,
+            secondary: amber,
             mode: isDark ? 'dark' : 'light'
         },
     })
@@ -147,15 +147,15 @@ function App() {
                             </IconButton>
                             <div>
                                 <Switch onChange={() => setIsDark(!isDark)}/>
-                                <NavButton color="inherit">Sign in</NavButton>
-                                <NavButton color="inherit">FAQ</NavButton>
-                                <NavButton color="inherit">Login</NavButton>
+                                <NavButton>Sign in</NavButton>
+                                <NavButton>FAQ</NavButton>
+                                <NavButton>Login</NavButton>
                                 <NavButton background={'crimson'}>Logout</NavButton>
                             </div>
                         </Container>
                     </Toolbar>
                 </AppBar>
-                <Container>
+                <Container maxWidth={'lg'}>
                     <Grid container sx={{p: "15px 0"}}>
                         <CreateItemForm createTitle={createTodolist} minTitleLength={5} maxTitleLength={10}/>
                     </Grid>

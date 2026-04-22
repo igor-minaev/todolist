@@ -54,7 +54,7 @@ export const Todolist = ({
                             <Box sx={getListItemSx(task.isDone)}>
                                 <EditableSpan title={task.title}
                                               editeItemTitle={changeTaskTitleHandler}
-                                              // spanClassName={task.isDone ? "task-done" : "task"}
+                                    // spanClassName={task.isDone ? "task-done" : "task"}
                                 />
                             </Box>
                         </Box>
@@ -84,9 +84,9 @@ export const Todolist = ({
                 tasksList
             }
             <Box sx={containerSx}>
-                <Button size='small' variant={filter === "all" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("all", id)}>All</Button>
-                <Button size='small' variant={filter === "active" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("active", id)}>Active</Button>
-                <Button size='small' variant={filter === "completed" ? "contained" : "outlined"} onClick={() => changeTodolistFilter("completed", id)}>Completed</Button>
+                <Button size='small' variant="contained" color={filter === "all" ? "secondary" : "primary"} onClick={() => changeTodolistFilter("all", id)}>All</Button>
+                <Button size='small' variant="contained" color={filter === "active" ? "secondary" : "primary"} onClick={() => changeTodolistFilter("active", id)}>Active</Button>
+                <Button size='small' variant="contained" color={filter === "completed" ? "secondary" : "primary"} onClick={() => changeTodolistFilter("completed", id)}>Completed</Button>
             </Box>
         </div>
     )

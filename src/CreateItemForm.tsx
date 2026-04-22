@@ -1,5 +1,5 @@
 import {ChangeEvent, useState} from "react";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 
@@ -38,10 +38,10 @@ export const CreateItemForm = ({createTitle, minTitleLength = 3, maxTitleLength 
                        onKeyDown={(e) => {
                            e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
                        }}
-                       helperText={error && <div style={{color: "red"}}>enter valid title</div>}
+                       helperText={error && "enter valid title"}
                        error={error}/>
-            <IconButton size="medium" disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
-                <AddBoxIcon/>
+            <IconButton disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
+                <AddCircleOutlineOutlinedIcon/>
             </IconButton>
             {/*{error && <div style={{color: "red"}}>enter valid title</div>}*/}
             {/*<button>+</button>*/}
