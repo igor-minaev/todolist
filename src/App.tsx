@@ -56,7 +56,7 @@ function App() {
         ]
     })
 
-
+// tasks
     const deleteTask = (taskId: TaskType["id"], todolistId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
@@ -78,7 +78,7 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
     }
 
-
+// todolists
     const changeTodolistFilter = (filter: FilterValuesType, todolistId: string) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
@@ -104,6 +104,7 @@ function App() {
         setTodolists([...todolists, newTodolist])
         setTasks({...tasks, [newTodolistId]: []})
     }
+    
 
     const todolistComponents = todolists.map(tl => (
         <Grid key={tl.id}>
