@@ -16,10 +16,9 @@ export const todolistsReducer = (todolists: TodolistType[], action: ActionType):
             return todolists.filter(tl => tl.id !== id)
         }
         case 'create_todolist': {
-            const newTodolistId = crypto.randomUUID()
-            const title = action.payload.title
+            const {id, title} = action.payload
             const newTodolist: TodolistType = {
-                id: newTodolistId,
+                id,
                 title,
                 filter: 'all'
             }
@@ -50,7 +49,8 @@ export const deleteTodolistAC = (id: TodolistType['id']) => ({
 export const createTodolistAC = (title: TodolistType['title']) => ({
     type: 'create_todolist',
     payload: {
-        title
+        title,
+        id: crypto.randomUUID()
     }
 } as const)
 
