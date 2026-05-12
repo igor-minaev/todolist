@@ -22,8 +22,10 @@ import {
     deleteTodolistAC
 } from "../model/todolists-reducer.ts";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "../model/tasks-reducer.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store.ts";
+import {selectTodolists} from "../model/todolists-selectors.ts";
+import {selectTasks} from "../model/tasks-selectors.ts";
+import {useAppSelector} from "../common/hooks/useAppSelector.ts";
+import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
 
 export type TodolistType = {
     id: string
@@ -35,13 +37,13 @@ export type TasksStateType = {
     [todolistId: string]: TaskType[]
 }
 
+
 function App() {
 
-    const todolists = useSelector<RootState, TodolistType[]>((state: RootState) => state.todolists)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
 
-    const tasks = useSelector<RootState, TasksStateType>((state: RootState) => state.tasks)
-
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
 
 // tasks
@@ -73,7 +75,7 @@ function App() {
     }
 
     const deleteTodolist = (todolistId: string) => {
-        dispatch(deleteTodolistAC(todolistId))
+        dispatch(deleteTodolistAC({id:todolistId}))
     }
 
     const createTodolist = (title: TodolistType['title']) => {
