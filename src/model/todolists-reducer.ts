@@ -1,4 +1,4 @@
-import {TodolistType} from "../App.tsx";
+import {TodolistType} from "../app/App.tsx";
 import {FilterValuesType} from "../types.ts";
 
 export type DeleteTodolistAT = ReturnType<typeof deleteTodolistAC>

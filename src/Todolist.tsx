@@ -6,7 +6,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import {FilterValuesType, TaskType} from "./types.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
-import {TodolistType} from "./App.tsx";
+import {TodolistType} from "./app/App.tsx";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
