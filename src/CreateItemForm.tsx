@@ -9,7 +9,7 @@ type CreateItemFormPropsType = {
     maxTitleLength?: number
 }
 
-export const CreateItemForm = ({createTitle, minTitleLength = 3, maxTitleLength = 15}: CreateItemFormPropsType) => {
+export const CreateItemForm = ({createTitle, minTitleLength = 3, maxTitleLength = 20}: CreateItemFormPropsType) => {
     const [titleInputValue, setTitleInputValue] = useState('')
     const [error, setError] = useState(false)
 

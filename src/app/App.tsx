@@ -48,20 +48,20 @@ function App() {
 
 // tasks
     const deleteTask = (taskId: TaskType["id"], todolistId: string) => {
-        dispatch(deleteTaskAC({taskId, todolistId}))
+        dispatch(deleteTaskAC({taskId, id: todolistId}))
 
     }
 
     const createTask = (title: TaskType["title"], todolistId: string) => {
-        dispatch(createTaskAC({title, todolistId}))
+        dispatch(createTaskAC({title, id: todolistId}))
     }
 
     const changeTaskStatus = (taskId: TaskType['id'], isDone: TaskType['isDone'], todolistId: string) => {
-        dispatch(changeTaskStatusAC({taskId, isDone, todolistId}))
+        dispatch(changeTaskStatusAC({taskId, isDone, id: todolistId}))
     }
 
     const changeTaskTitle = (taskId: TaskType['id'], title: TaskType['title'], todolistId: string) => {
-        dispatch(changeTaskTitleAC({taskId, title, todolistId}))
+        dispatch(changeTaskTitleAC({taskId, title, id: todolistId}))
     }
 
 // todolists
@@ -75,7 +75,7 @@ function App() {
     }
 
     const deleteTodolist = (todolistId: string) => {
-        dispatch(deleteTodolistAC({id:todolistId}))
+        dispatch(deleteTodolistAC({id: todolistId}))
     }
 
     const createTodolist = (title: TodolistType['title']) => {
@@ -134,7 +134,7 @@ function App() {
                 </AppBar>
                 <Container maxWidth={'lg'}>
                     <Grid container sx={{p: "15px 0"}}>
-                        <CreateItemForm createTitle={createTodolist} minTitleLength={5} maxTitleLength={10}/>
+                        <CreateItemForm createTitle={createTodolist} minTitleLength={5} maxTitleLength={20}/>
                     </Grid>
                     <Grid container spacing={6}>
                         {todolistComponents}
