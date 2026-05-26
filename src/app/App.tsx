@@ -1,6 +1,5 @@
 import './App.css'
 import {Todolist} from "../Todolist.tsx";
-import {useState} from "react";
 import {getFilteredTasks} from "../utils.ts";
 import {FilterValuesType, TaskType} from "../types.ts";
 import {CreateItemForm} from "../CreateItemForm.tsx";
@@ -12,9 +11,8 @@ import Container from '@mui/material/Container'
 import Grid from "@mui/material/Grid";
 import Paper from '@mui/material/Paper';
 import {NavButton} from "../NavButton.ts";
-import {createTheme, CssBaseline, Switch, ThemeProvider} from "@mui/material";
+import {CssBaseline, Switch, ThemeProvider} from "@mui/material";
 import {containerSx} from "../Todolist.style.ts";
-import {amber, purple} from "@mui/material/colors";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
@@ -26,6 +24,9 @@ import {selectTodolists} from "../model/todolists-selectors.ts";
 import {selectTasks} from "../model/tasks-selectors.ts";
 import {useAppSelector} from "../common/hooks/useAppSelector.ts";
 import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {selectThemeMode} from "./app-selectors";
+import {changeThemeModeAC} from "./app-reducer";
+import {getTheme} from "../common/theme/theme";
 
 export type TodolistType = {
     id: string
@@ -42,6 +43,7 @@ function App() {
 
     const todolists = useAppSelector(selectTodolists)
     const tasks = useAppSelector(selectTasks)
+    const themeMode = useAppSelector(selectThemeMode)
 
     const dispatch = useAppDispatch()
 
@@ -102,15 +104,12 @@ function App() {
         </Grid>
     ))
 
-    const [isDark, setIsDark] = useState(false)
 
-    const theme = createTheme({
-        palette: {
-            primary: purple,
-            secondary: amber,
-            mode: isDark ? 'dark' : 'light'
-        },
-    })
+    const theme = getTheme(themeMode)
+
+    const changeMode = () => {
+        dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
+    }
 
     return (
         <div className="app">
@@ -123,7 +122,7 @@ function App() {
                                 <MenuIcon/>
                             </IconButton>
                             <div>
-                                <Switch onChange={() => setIsDark(!isDark)}/>
+                                <Switch onChange={changeMode}/>
                                 <NavButton>Sign in</NavButton>
                                 <NavButton>FAQ</NavButton>
                                 <NavButton>Login</NavButton>
