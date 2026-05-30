@@ -1,4 +1,6 @@
-import {FilterValuesType, TaskType} from "./types.ts";
+import type {TaskType} from "@/model/tasks-reducer";
+import type {FilterValuesType} from "@/model/todolists-reducer";
+
 
 export const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
     switch (filter) {

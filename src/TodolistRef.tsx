@@ -1,6 +1,8 @@
 import {JSX, useRef} from "react";
 import {Button} from "./Button.tsx";
-import {FilterValuesType, TaskType} from "./types.ts";
+import type {TaskType} from "@/model/tasks-reducer";
+import type {FilterValuesType} from "@/model/todolists-reducer";
+
 
 type PropsType = {
     title: string

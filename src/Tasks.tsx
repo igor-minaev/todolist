@@ -18,7 +18,7 @@ export const Tasks = ({todolist}: PropsType) => {
 
     return (
         <>
-            {tasks.length === 0
+            {todolistTasks.length === 0
                 ? (<span>Your tasksList is empty</span>)
                 : (<List>
                     {todolistTasks.map(task => {
