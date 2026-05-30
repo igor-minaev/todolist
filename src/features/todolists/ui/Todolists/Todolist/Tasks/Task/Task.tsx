@@ -1,13 +1,15 @@
-import {containerSx, getListItemSx} from "@/Todolist.style";
 import {Box} from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "@/EditableSpan";
+import {EditableSpan} from "@/common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import ListItem from "@mui/material/ListItem";
 import {ChangeEvent} from "react";
-import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, type TaskType} from "@/model/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, type TaskType} from "@/features/todolists/model/tasks-reducer";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch";
+import {getListItemSx} from "./Task.styles";
+import {containerSx} from "@/common/styles/container.styles";
+
 
 type Props = {
     task: TaskType

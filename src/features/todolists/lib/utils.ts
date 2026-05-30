@@ -1,5 +1,5 @@
-import type {TaskType} from "@/model/tasks-reducer";
-import type {FilterValuesType} from "@/model/todolists-reducer";
+import type {TaskType} from "@/features/todolists/model/tasks-reducer";
+import type {FilterValuesType} from "@/features/todolists/model/todolists-reducer";
 
 
 export const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {

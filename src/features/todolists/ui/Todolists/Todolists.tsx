@@ -1,8 +1,8 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {Todolist} from "@/Todolist";
+import {Todolist} from "@/features/todolists/ui/Todolists/Todolist/Todolist";
 import {useAppSelector} from "@/common/hooks/useAppSelector";
-import {selectTodolists} from "@/model/todolists-selectors";
+import {selectTodolists} from "@/features/todolists/model/todolists-selectors";
 
 
 export const Todolists = () => {

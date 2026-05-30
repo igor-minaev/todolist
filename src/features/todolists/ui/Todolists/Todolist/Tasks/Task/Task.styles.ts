@@ -1,9 +1,4 @@
-import {SxProps} from '@mui/material'
-
-export const containerSx: SxProps = {
-    display: 'flex',
-    justifyContent: 'space-between',
-}
+import {SxProps} from "@mui/material";
 
 export const getListItemSx = (isDone: boolean): SxProps => ({
     fontWeight: isDone ? 'normal' : 'bold',
@@ -11,4 +6,3 @@ export const getListItemSx = (isDone: boolean): SxProps => ({
     textDecoration: isDone ? 'line-through' : 'none',
     opacity: isDone ? "0.5" : "1"
 })
-
