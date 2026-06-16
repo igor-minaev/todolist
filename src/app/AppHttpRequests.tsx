@@ -1,6 +1,4 @@
 import {CreateItemForm, EditableSpan} from '@/common/components'
-import {instance} from "@/common/instance/instance";
-import type {BaseResponse} from "@/common/types";
 import {todolistsApi} from "@/features/todolists/api/todolistsApi";
 import type {Todolist} from "@/features/todolists/api/todolistsApi.types";
 import Checkbox from '@mui/material/Checkbox'
