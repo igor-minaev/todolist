@@ -22,7 +22,9 @@ export const AppHttpRequests = () => {
     }, [])
 
     const createTodolist = (title: string) => {
-        axios.post<CreateTodolistResponse>(' https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+        axios.post<BaseResponse<{
+            item: Todolist
+        }>>(' https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
@@ -33,9 +35,25 @@ export const AppHttpRequests = () => {
     }
 
     const deleteTodolist = (id: string) => {
+        axios.delete<BaseResponse<{}>>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'API-KEY': apiKey
+            }
+        }).then(() => {
+            setTodolists(todolists.filter(todolist => todolist.id !== id))
+        })
     }
 
     const changeTodolistTitle = (id: string, title: string) => {
+        axios.put<BaseResponse<{}>>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'API-KEY': apiKey
+            }
+        }).then(() => {
+            setTodolists(todolists.map(todolist => todolist.id == id ? {...todolist, title} : todolist))
+        })
     }
 
     const createTask = (todolistId: string, title: string) => {
@@ -98,9 +116,32 @@ export type FieldError = {
     field: string
 }
 
-type CreateTodolistResponse = {
-    data: { item: Todolist }
+type BaseResponse<T> = {
+    data: T
     resultCode: number
     messages: string[]
     fieldsErrors: FieldError[]
 }
+
+// type CreateTodolistResponse = {
+//     data: { item: Todolist }
+//     resultCode: number
+//     messages: string[]
+//     fieldsErrors: FieldError[]
+// }
+//
+// type DeleteTodolistResponse = {
+//     data: {}
+//     resultCode: number
+//     messages: string[]
+//     fieldsErrors: FieldError[]
+// }
+//
+// type UpdateTodolistResponse = {
+//     data: {}
+//     resultCode: number
+//     messages: string[]
+//     fieldsErrors: FieldError[]
+// }
+
+
