@@ -1,7 +1,8 @@
+import type {BaseResponse} from "@/common/types";
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
-import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
+import {CreateItemForm} from '@/common/components'
+import {EditableSpan} from '@/common/components'
 import axios from "axios"
 
 
@@ -35,7 +36,7 @@ export const AppHttpRequests = () => {
     }
 
     const deleteTodolist = (id: string) => {
-        axios.delete<BaseResponse<{}>>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+        axios.delete<BaseResponse>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
@@ -46,7 +47,7 @@ export const AppHttpRequests = () => {
     }
 
     const changeTodolistTitle = (id: string, title: string) => {
-        axios.put<BaseResponse<{}>>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+        axios.put<BaseResponse>(` https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
@@ -111,17 +112,7 @@ export type Todolist = {
     order: number
 }
 
-export type FieldError = {
-    error: string
-    field: string
-}
 
-type BaseResponse<T> = {
-    data: T
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
 
 // type CreateTodolistResponse = {
 //     data: { item: Todolist }
