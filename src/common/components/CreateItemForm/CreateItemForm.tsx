@@ -1,57 +1,57 @@
-import {ChangeEvent, useState} from "react";
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
+import { ChangeEvent, useState } from "react"
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined"
+import IconButton from "@mui/material/IconButton"
+import TextField from "@mui/material/TextField"
 
 type CreateItemFormPropsType = {
-    createTitle: (title: string) => void
-    minTitleLength?: number
-    maxTitleLength?: number
+  createTitle: (title: string) => void
+  minTitleLength?: number
+  maxTitleLength?: number
 }
 
-export const CreateItemForm = ({createTitle, minTitleLength = 3, maxTitleLength = 20}: CreateItemFormPropsType) => {
-    const [titleInputValue, setTitleInputValue] = useState('')
-    const [error, setError] = useState(false)
+export const CreateItemForm = ({ createTitle, minTitleLength = 3, maxTitleLength = 20 }: CreateItemFormPropsType) => {
+  const [titleInputValue, setTitleInputValue] = useState("")
+  const [error, setError] = useState(false)
 
-    const isTaskTitleLengthNotValid = titleInputValue.length < minTitleLength || titleInputValue.length > maxTitleLength
+  const isTaskTitleLengthNotValid = titleInputValue.length < minTitleLength || titleInputValue.length > maxTitleLength
 
-    const setTitleInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setTitleInputValue(e.currentTarget.value)
+  const setTitleInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    error && setError(false)
+    setTitleInputValue(e.currentTarget.value)
+  }
+
+  const createTitleHandler = () => {
+    const trimmedItemTitle = titleInputValue.trim()
+    if (trimmedItemTitle === "") {
+      setError(true)
+    } else {
+      createTitle(trimmedItemTitle)
     }
+    setTitleInputValue("")
+  }
 
-    const createTitleHandler = () => {
-        const trimmedItemTitle = titleInputValue.trim()
-        if (trimmedItemTitle === '') {
-            setError(true)
-        } else {
-            createTitle(trimmedItemTitle)
-        }
-        setTitleInputValue('')
-    }
-
-    return (
-        <div>
-            <TextField size='small'
-                       value={titleInputValue}
-                       onChange={setTitleInputHandler}
-                       onKeyDown={(e) => {
-                           e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
-                       }}
-                       helperText={error && "enter valid title"}
-                       error={error}/>
-            <IconButton disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
-                <AddCircleOutlineOutlinedIcon/>
-            </IconButton>
-            {/*{error && <div style={{color: "red"}}>enter valid title</div>}*/}
-            {/*<button>+</button>*/}
-            {error || titleInputValue.length < minTitleLength &&
-                <p>min title length is {minTitleLength} chars</p>}
-            {titleInputValue.length >= minTitleLength && titleInputValue.length <= maxTitleLength &&
-                < p> max title length is {maxTitleLength} chars</p>}
-            {titleInputValue.length > maxTitleLength && <p style={{color: "red"}}>max title is too long
-            </p>}
-        </div>
-    );
-};
-
+  return (
+    <div>
+      <TextField
+        size="small"
+        value={titleInputValue}
+        onChange={setTitleInputHandler}
+        onKeyDown={(e) => {
+          e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
+        }}
+        helperText={error && "enter valid title"}
+        error={error}
+      />
+      <IconButton disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
+        <AddCircleOutlineOutlinedIcon />
+      </IconButton>
+      {/*{error && <div style={{color: "red"}}>enter valid title</div>}*/}
+      {/*<button>+</button>*/}
+      {error || (titleInputValue.length < minTitleLength && <p>min title length is {minTitleLength} chars</p>)}
+      {titleInputValue.length >= minTitleLength && titleInputValue.length <= maxTitleLength && (
+        <p> max title length is {maxTitleLength} chars</p>
+      )}
+      {titleInputValue.length > maxTitleLength && <p style={{ color: "red" }}>max title is too long</p>}
+    </div>
+  )
+}

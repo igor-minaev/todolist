@@ -26,8 +26,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": [
-    "src",
-    "node_modules/.pnpm/vitest@2.1.8/node_modules/vitest/globals.d.ts"
-  ]
+  "include": ["src", "node_modules/.pnpm/vitest@2.1.8/node_modules/vitest/globals.d.ts"]
 }
