@@ -1,4 +1,6 @@
 import { CreateItemForm, EditableSpan } from "@/common/components"
+import { tasksApi } from "@/features/todolists/api/tasksApi"
+import type { DomainTask } from "@/features/todolists/api/tasksApi.types"
 import { todolistsApi } from "@/features/todolists/api/todolistsApi"
 import type { Todolist } from "@/features/todolists/api/todolistsApi.types"
 import Checkbox from "@mui/material/Checkbox"
@@ -6,17 +8,24 @@ import { type ChangeEvent, type CSSProperties, useEffect, useState } from "react
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
-  const [tasks, setTasks] = useState<any>({})
+  const [tasks, setTasks] = useState<Record<string, DomainTask[]>>({})
 
   useEffect(() => {
     todolistsApi.getTodolists().then((res) => {
-      setTodolists(res.data)
+      const todolists = res.data
+      setTodolists(todolists)
+    })
+    todolists.forEach((todolist) => {
+      tasksApi.getTasks(todolist.id).then((res) => {
+        setTasks((prevState) => ({ ...prevState, [todolist.id]: res.data.items }))
+      })
     })
   }, [])
 
   const createTodolist = (title: string) => {
     todolistsApi.createTodolist(title).then((res) => {
       setTodolists([res.data.data.item, ...todolists])
+      setTasks({ ...tasks, [res.data.data.item.id]: [] })
     })
   }
 
@@ -27,12 +36,16 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    todolistsApi.changeTodolistTitle(id, title).then(() => {
+    todolistsApi.changeTodolistTitle({ id, title }).then(() => {
       setTodolists(todolists.map((todolist) => (todolist.id == id ? { ...todolist, title } : todolist)))
     })
   }
 
-  const createTask = (todolistId: string, title: string) => {}
+  const createTask = (todolistId: string, title: string) => {
+    tasksApi.createTask({ todolistId, title }).then((res) => {
+      setTasks({ ...tasks, [todolistId]: [res.data.data.item, ...tasks[todolistId]] })
+    })
+  }
 
   const deleteTask = (todolistId: string, taskId: string) => {}
 
