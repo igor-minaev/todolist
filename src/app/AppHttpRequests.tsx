@@ -14,18 +14,19 @@ export const AppHttpRequests = () => {
     todolistsApi.getTodolists().then((res) => {
       const todolists = res.data
       setTodolists(todolists)
-    })
-    todolists.forEach((todolist) => {
-      tasksApi.getTasks(todolist.id).then((res) => {
-        setTasks((prevState) => ({ ...prevState, [todolist.id]: res.data.items }))
+      todolists.forEach((todolist) => {
+        tasksApi.getTasks(todolist.id).then((res) => {
+          setTasks((prevState) => ({ ...prevState, [todolist.id]: res.data.items }))
+        })
       })
     })
   }, [])
 
   const createTodolist = (title: string) => {
     todolistsApi.createTodolist(title).then((res) => {
-      setTodolists([res.data.data.item, ...todolists])
-      setTasks({ ...tasks, [res.data.data.item.id]: [] })
+      const newTodolist = res.data.data.item
+      setTodolists([newTodolist, ...todolists])
+      setTasks({ ...tasks, [newTodolist.id]: [] })
     })
   }
 
@@ -47,7 +48,11 @@ export const AppHttpRequests = () => {
     })
   }
 
-  const deleteTask = (todolistId: string, taskId: string) => {}
+  const deleteTask = (todolistId: string, taskId: string) => {
+    tasksApi.deleteTask({ todolistId, taskId }).then(() => {
+      setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter((task) => task.id !== taskId) })
+    })
+  }
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: any) => {}
 
@@ -63,9 +68,9 @@ export const AppHttpRequests = () => {
             <button onClick={() => deleteTodolist(todolist.id)}>x</button>
           </div>
           <CreateItemForm createTitle={(title) => createTask(todolist.id, title)} />
-          {tasks[todolist.id]?.map((task: any) => (
+          {tasks[todolist.id]?.map((task) => (
             <div key={task.id}>
-              <Checkbox checked={task.isDone} onChange={(e) => changeTaskStatus(e, task)} />
+              <Checkbox checked={task.status === 2} onChange={(e) => changeTaskStatus(e, task)} />
               <EditableSpan title={task.title} editeItemTitle={(title) => changeTaskTitle(task, title)} />
               <button onClick={() => deleteTask(todolist.id, task.id)}>x</button>
             </div>
@@ -85,24 +90,3 @@ const container: CSSProperties = {
   justifyContent: "space-between",
   flexDirection: "column",
 }
-
-// type CreateTodolistResponse = {
-//     data: { item: Todolist }
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
-//
-// type DeleteTodolistResponse = {
-//     data: {}
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
-//
-// type UpdateTodolistResponse = {
-//     data: {}
-//     resultCode: number
-//     messages: string[]
-//     fieldsErrors: FieldError[]
-// }
