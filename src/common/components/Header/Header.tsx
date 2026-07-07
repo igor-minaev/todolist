@@ -8,7 +8,7 @@ import AppBar from "@mui/material/AppBar"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { useAppSelector } from "@/common/hooks/useAppSelector"
 import { selectThemeMode } from "@/app/app-selectors"
-import { changeThemeModeAC } from "@/app/app-reducer"
+import { changeThemeModeAC } from "@/app/app-slice"
 import { containerSx } from "@/common/styles/container.styles"
 
 export const Header = () => {
