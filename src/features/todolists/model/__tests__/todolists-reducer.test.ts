@@ -7,7 +7,7 @@ import {
   deleteTodolistAC,
   todolistsReducer,
   type TodolistType,
-} from "../todolists-reducer"
+} from "../todolists-slice"
 import { nanoid } from "@reduxjs/toolkit"
 
 let todolistId1: string

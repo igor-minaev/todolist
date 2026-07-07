@@ -3,11 +3,7 @@ import IconButton from "@mui/material/IconButton"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { Typography } from "@mui/material"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
-import {
-  changeTodolistTitleAC,
-  deleteTodolistAC,
-  type TodolistType,
-} from "@/features/todolists/model/todolists-reducer"
+import { changeTodolistTitleAC, deleteTodolistAC, type TodolistType } from "@/features/todolists/model/todolists-slice"
 
 type PropsType = {
   todolist: TodolistType

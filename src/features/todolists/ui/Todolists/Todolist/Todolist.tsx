@@ -1,7 +1,7 @@
 import { CreateItemForm } from "@/common/components/CreateItemForm/CreateItemForm"
 import { createTaskAC } from "@/features/todolists/model/tasks-reducer"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
-import { type TodolistType } from "@/features/todolists/model/todolists-reducer"
+import { type TodolistType } from "@/features/todolists/model/todolists-slice"
 import { TodolistTitle } from "./TodolistTitle/TodolistTitle"
 import { Tasks } from "./Tasks/Tasks"
 import { FilterButtons } from "./FilterButtons/FilterButtons"

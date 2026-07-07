@@ -6,7 +6,7 @@ import {
   changeTodolistFilterAC,
   type FilterValuesType,
   type TodolistType,
-} from "@/features/todolists/model/todolists-reducer"
+} from "@/features/todolists/model/todolists-slice"
 import { containerSx } from "@/common/styles/container.styles"
 
 type PropsType = {
