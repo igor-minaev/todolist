@@ -1,12 +1,16 @@
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
-import IconButton from "@mui/material/IconButton"
+import { useAppDispatch } from "@/common/hooks/useAppDispatch"
+import {
+  changeTodolistTitleAC,
+  deleteTodolistAC,
+  type DomainTodolist,
+} from "@/features/todolists/model/todolists-slice"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { Typography } from "@mui/material"
-import { useAppDispatch } from "@/common/hooks/useAppDispatch"
-import { changeTodolistTitleAC, deleteTodolistAC, type TodolistType } from "@/features/todolists/model/todolists-slice"
+import IconButton from "@mui/material/IconButton"
 
 type PropsType = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const TodolistTitle = ({ todolist }: PropsType) => {

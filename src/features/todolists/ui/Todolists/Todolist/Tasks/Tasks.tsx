@@ -1,12 +1,12 @@
-import List from "@mui/material/List"
 import { useAppSelector } from "@/common/hooks/useAppSelector"
-import { selectTasks } from "@/features/todolists/model/tasks-selectors"
 import { getFilteredTasks } from "@/features/todolists/lib/utils"
-import type { TodolistType } from "@/features/todolists/model/todolists-slice"
+import { selectTasks } from "@/features/todolists/model/tasks-selectors"
+import type { DomainTodolist } from "@/features/todolists/model/todolists-slice"
 import { Task } from "@/features/todolists/ui/Todolists/Todolist/Tasks/Task/Task"
+import List from "@mui/material/List"
 
 type PropsType = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const Tasks = ({ todolist }: PropsType) => {
@@ -18,11 +18,11 @@ export const Tasks = ({ todolist }: PropsType) => {
 
   return (
     <>
-      {todolistTasks.length === 0 ? (
+      {todolistTasks?.length === 0 ? (
         <span>Your tasksList is empty</span>
       ) : (
         <List>
-          {todolistTasks.map((task) => {
+          {todolistTasks?.map((task) => {
             return <Task key={task.id} task={task} todolistId={id} />
           })}
         </List>

@@ -1,4 +1,6 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit"
+import { todolistsApi } from "@/features/todolists/api/todolistsApi"
+import type { Todolist } from "@/features/todolists/api/todolistsApi.types"
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit"
 
 export type TodolistType = {
   id: string
@@ -6,12 +8,17 @@ export type TodolistType = {
   filter: FilterValuesType
 }
 
+export type DomainTodolist = Todolist & { filter: FilterValuesType }
+
 export type FilterValuesType = "all" | "active" | "completed"
 
 export const toolistsSlice = createSlice({
   name: "todolists",
-  initialState: [] as TodolistType[],
+  initialState: [] as DomainTodolist[],
   reducers: (create) => ({
+    fetchTodolistAC: create.reducer<{ todolists: Todolist[] }>((_state, action) => {
+      return action.payload.todolists.map((tl) => ({ ...tl, filter: "all" }))
+    }),
     deleteTodolistAC: create.reducer<{ id: string }>((state, action) => {
       const index = state.findIndex((todo) => todo.id === action.payload.id)
       if (index !== -1) {
@@ -29,13 +36,25 @@ export const toolistsSlice = createSlice({
     createTodolistAC: create.preparedReducer(
       (title: string) => ({ payload: { title, id: nanoid() } }),
       (state, action) => {
-        const newTodolist: TodolistType = { id: action.payload.id, title: action.payload.title, filter: "all" }
+        const newTodolist: DomainTodolist = {
+          id: action.payload.id,
+          title: action.payload.title,
+          filter: "all",
+          addedDate: "",
+          order: 1,
+        }
         state.push(newTodolist)
       },
     ),
   }),
 })
 
-export const { deleteTodolistAC, createTodolistAC, changeTodolistTitleAC, changeTodolistFilterAC } =
+export const fetchTodolistTC = createAsyncThunk(`${toolistsSlice.name}/fetchTodolistTC`, (_arg, { dispatch }) => {
+  todolistsApi.getTodolists().then((res) => {
+    dispatch(fetchTodolistAC({ todolists: res.data }))
+  })
+})
+
+export const { deleteTodolistAC, createTodolistAC, changeTodolistTitleAC, changeTodolistFilterAC, fetchTodolistAC } =
   toolistsSlice.actions
 export const todolistsReducer = toolistsSlice.reducer
