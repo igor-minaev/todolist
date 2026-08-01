@@ -1,7 +1,7 @@
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import {
-  changeTodolistTitleAC,
+  changeTodolistTitleTC,
   deleteTodolistTC,
   type DomainTodolist,
 } from "@/features/todolists/model/todolists-slice"
@@ -18,7 +18,7 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
 
   const dispatch = useAppDispatch()
 
-  const changeTodolistTitleHandler = (title: string) => dispatch(changeTodolistTitleAC({ id, title }))
+  const changeTodolistTitleHandler = (title: string) => dispatch(changeTodolistTitleTC({ id, title }))
 
   const deleteTodolistHandler = () => dispatch(deleteTodolistTC(id))
 
