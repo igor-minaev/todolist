@@ -2,7 +2,7 @@ import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import {
   changeTodolistTitleAC,
-  deleteTodolistAC,
+  deleteTodolistTC,
   type DomainTodolist,
 } from "@/features/todolists/model/todolists-slice"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
@@ -20,7 +20,7 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
 
   const changeTodolistTitleHandler = (title: string) => dispatch(changeTodolistTitleAC({ id, title }))
 
-  const deleteTodolistHandler = () => dispatch(deleteTodolistAC({ id }))
+  const deleteTodolistHandler = () => dispatch(deleteTodolistTC(id))
 
   return (
     <Typography align="center" variant="h5" sx={{ fontWeight: "bold" }}>
