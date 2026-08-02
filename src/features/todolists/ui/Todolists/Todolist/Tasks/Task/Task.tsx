@@ -3,7 +3,7 @@ import { TaskStatus } from "@/common/enum/enum"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { containerSx } from "@/common/styles/container.styles"
 import type { DomainTask } from "@/features/todolists/api/tasksApi.types"
-import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC } from "@/features/todolists/model/tasks-slice"
+import { deleteTaskTC, updateTaskTC } from "@/features/todolists/model/tasks-slice"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { Box } from "@mui/material"
 import Checkbox from "@mui/material/Checkbox"
@@ -20,24 +20,16 @@ type Props = {
 export const Task = ({ task, todolistId }: Props) => {
   const dispatch = useAppDispatch()
 
-  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    dispatch(
-      changeTaskStatusAC({
-        taskId: task.id,
-        isDone: e.currentTarget.checked,
-        id: todolistId,
-      }),
-    )
-  const changeTaskTitleHandler = (title: string) =>
-    dispatch(
-      changeTaskTitleAC({
-        taskId: task.id,
-        title,
-        id: todolistId,
-      }),
-    )
+  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const status = e.target.checked ? TaskStatus.Completed : TaskStatus.New
+    dispatch(updateTaskTC({ ...task, status }))
+  }
 
-  const deleteTaskHandler = () => dispatch(deleteTaskTC({ taskId: task.id, todolistId }))
+  const changeTaskTitleHandler = (title: string) => {
+    dispatch(updateTaskTC({ ...task, title }))
+  }
+
+  const deleteTaskHandler = () => dispatch(deleteTaskTC({ todolistId, taskId: task.id }))
   const isCompletedTask = task.status === TaskStatus.Completed
 
   return (
