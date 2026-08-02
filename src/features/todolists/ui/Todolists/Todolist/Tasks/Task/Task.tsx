@@ -1,12 +1,9 @@
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
+import { TaskStatus } from "@/common/enum/enum"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { containerSx } from "@/common/styles/container.styles"
-import {
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  deleteTaskAC,
-  type TaskType,
-} from "@/features/todolists/model/tasks-slice"
+import type { DomainTask } from "@/features/todolists/api/tasksApi.types"
+import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC } from "@/features/todolists/model/tasks-slice"
 import HighlightOffIcon from "@mui/icons-material/HighlightOff"
 import { Box } from "@mui/material"
 import Checkbox from "@mui/material/Checkbox"
@@ -16,7 +13,7 @@ import { ChangeEvent } from "react"
 import { getListItemSx } from "./Task.styles"
 
 type Props = {
-  task: TaskType
+  task: DomainTask
   todolistId: string
 }
 
@@ -40,13 +37,14 @@ export const Task = ({ task, todolistId }: Props) => {
       }),
     )
 
-  const deleteTaskHandler = () => dispatch(deleteTaskAC({ taskId: task.id, id: todolistId }))
+  const deleteTaskHandler = () => dispatch(deleteTaskTC({ taskId: task.id, todolistId }))
+  const isCompletedTask = task.status === TaskStatus.Completed
 
   return (
     <ListItem disablePadding sx={containerSx}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Checkbox size="medium" onChange={changeTaskStatusHandler} checked={task.isDone} />
-        <Box sx={getListItemSx(task.isDone)}>
+        <Checkbox size="medium" onChange={changeTaskStatusHandler} checked={isCompletedTask} />
+        <Box sx={getListItemSx(isCompletedTask)}>
           <EditableSpan title={task.title} editeItemTitle={changeTaskTitleHandler} />
         </Box>
       </Box>

@@ -29,8 +29,8 @@ export const toolistsSlice = createAppSlice({
         }
       },
       {
-        fulfilled: (_state, action) => {
-          return action.payload.todolists.map((tl) => ({ ...tl, filter: "all" }))
+        fulfilled: (state, action) => {
+          action.payload?.todolists.forEach((tl) => state.push({ ...tl, filter: "all" }))
         },
       },
     ),
@@ -90,6 +90,7 @@ export const toolistsSlice = createAppSlice({
   }),
 })
 
-export const { changeTodolistFilterAC } = toolistsSlice.actions
+export const { changeTodolistFilterAC, changeTodolistTitleTC, createTodolistTC, deleteTodolistTC, fetchTodolistTC } =
+  toolistsSlice.actions
 export const todolistsReducer = toolistsSlice.reducer
 export const { selectTodolists } = toolistsSlice.selectors
