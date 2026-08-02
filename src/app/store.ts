@@ -1,4 +1,4 @@
-import { tasksReducer } from "@/features/todolists/model/tasks-reducer"
+import { tasksReducer } from "@/features/todolists/model/tasks-slice"
 import { todolistsReducer } from "@/features/todolists/model/todolists-slice"
 import { configureStore } from "@reduxjs/toolkit"
 import { appReducer } from "./app-slice"

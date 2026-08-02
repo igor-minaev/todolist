@@ -1,7 +1,6 @@
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { useAppSelector } from "@/common/hooks/useAppSelector"
-import { selectTodolists } from "@/features/todolists/model/todolists-selectors"
-import { fetchTodolistTC } from "@/features/todolists/model/todolists-slice"
+import { fetchTodolistTC, selectTodolists } from "@/features/todolists/model/todolists-slice"
 import { Todolist } from "@/features/todolists/ui/Todolists/Todolist/Todolist"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"

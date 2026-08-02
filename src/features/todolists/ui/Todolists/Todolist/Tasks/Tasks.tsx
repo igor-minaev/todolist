@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/common/hooks/useAppSelector"
 import { getFilteredTasks } from "@/features/todolists/lib/utils"
-import { selectTasks } from "@/features/todolists/model/tasks-selectors"
+import { selectTasks } from "@/features/todolists/model/tasks-slice"
+
 import type { DomainTodolist } from "@/features/todolists/model/todolists-slice"
 import { Task } from "@/features/todolists/ui/Todolists/Todolist/Tasks/Task/Task"
 import List from "@mui/material/List"

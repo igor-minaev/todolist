@@ -14,6 +14,9 @@ export type TaskType = {
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: {} as TasksStateType,
+  selectors: {
+    selectTasks: (state) => state,
+  },
   reducers: (create) => ({
     deleteTaskAC: create.reducer<{ id: string; taskId: string }>((state, action) => {
       const tasks = state[action.payload.id]
@@ -54,3 +57,4 @@ export const tasksSlice = createSlice({
 
 export const { deleteTaskAC, createTaskAC, changeTaskStatusAC, changeTaskTitleAC } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
+export const { selectTasks } = tasksSlice.selectors

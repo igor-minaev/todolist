@@ -1,4 +1,4 @@
-import type { TaskType } from "@/features/todolists/model/tasks-reducer"
+import type { TaskType } from "@/features/todolists/model/tasks-slice"
 import type { FilterValuesType } from "@/features/todolists/model/todolists-slice"
 
 export const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {

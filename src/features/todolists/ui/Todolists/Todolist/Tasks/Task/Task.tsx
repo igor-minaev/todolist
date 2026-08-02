@@ -11,7 +11,7 @@ import {
   changeTaskTitleAC,
   deleteTaskAC,
   type TaskType,
-} from "@/features/todolists/model/tasks-reducer"
+} from "@/features/todolists/model/tasks-slice"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { getListItemSx } from "./Task.styles"
 import { containerSx } from "@/common/styles/container.styles"
