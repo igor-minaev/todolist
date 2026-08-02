@@ -1,20 +1,19 @@
-import { createTodolistTC } from "@/features/todolists/model/todolists-slice"
-import { Box } from "@mui/material"
-import Checkbox from "@mui/material/Checkbox"
 import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
-import IconButton from "@mui/material/IconButton"
-import HighlightOffIcon from "@mui/icons-material/HighlightOff"
-import ListItem from "@mui/material/ListItem"
-import { ChangeEvent, useEffect } from "react"
+import { useAppDispatch } from "@/common/hooks/useAppDispatch"
+import { containerSx } from "@/common/styles/container.styles"
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   deleteTaskAC,
   type TaskType,
 } from "@/features/todolists/model/tasks-slice"
-import { useAppDispatch } from "@/common/hooks/useAppDispatch"
+import HighlightOffIcon from "@mui/icons-material/HighlightOff"
+import { Box } from "@mui/material"
+import Checkbox from "@mui/material/Checkbox"
+import IconButton from "@mui/material/IconButton"
+import ListItem from "@mui/material/ListItem"
+import { ChangeEvent } from "react"
 import { getListItemSx } from "./Task.styles"
-import { containerSx } from "@/common/styles/container.styles"
 
 type Props = {
   task: TaskType
