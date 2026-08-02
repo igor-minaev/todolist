@@ -7,11 +7,13 @@ import { NavButton } from "@/common/components/NavButton/NavButton"
 import AppBar from "@mui/material/AppBar"
 import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { useAppSelector } from "@/common/hooks/useAppSelector"
-import { changeThemeModeAC, selectThemeMode } from "@/app/app-slice"
+import { changeThemeModeAC, selectStatus, selectThemeMode } from "@/app/app-slice"
 import { containerSx } from "@/common/styles/container.styles"
+import LinearProgress from "@mui/material/LinearProgress"
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const status = useAppSelector(selectStatus)
 
   const dispatch = useAppDispatch()
 
@@ -35,6 +37,7 @@ export const Header = () => {
           </div>
         </Container>
       </Toolbar>
+      {status === "loading" && <LinearProgress aria-label="Loading…" />}
     </AppBar>
   )
 }
