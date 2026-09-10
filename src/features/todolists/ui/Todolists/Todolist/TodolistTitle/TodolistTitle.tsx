@@ -14,7 +14,7 @@ type PropsType = {
 }
 
 export const TodolistTitle = ({ todolist }: PropsType) => {
-  const { id, title } = todolist
+  const { id, title, entityStatus } = todolist
 
   const dispatch = useAppDispatch()
 
@@ -25,7 +25,7 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
   return (
     <Typography align="center" variant="h5" sx={{ fontWeight: "bold" }}>
       <EditableSpan title={title} editeItemTitle={changeTodolistTitleHandler} />
-      <IconButton onClick={deleteTodolistHandler}>
+      <IconButton onClick={deleteTodolistHandler} disabled={entityStatus === "loading"}>
         <HighlightOffIcon />
       </IconButton>
     </Typography>
