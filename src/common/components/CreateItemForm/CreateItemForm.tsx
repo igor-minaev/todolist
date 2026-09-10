@@ -7,13 +7,20 @@ type CreateItemFormPropsType = {
   createTitle: (title: string) => void
   minTitleLength?: number
   maxTitleLength?: number
+  disabled?: boolean
 }
 
-export const CreateItemForm = ({ createTitle, minTitleLength = 3, maxTitleLength = 20 }: CreateItemFormPropsType) => {
+export const CreateItemForm = ({
+  createTitle,
+  minTitleLength = 3,
+  maxTitleLength = 20,
+  disabled,
+}: CreateItemFormPropsType) => {
   const [titleInputValue, setTitleInputValue] = useState("")
   const [error, setError] = useState(false)
 
-  const isTaskTitleLengthNotValid = titleInputValue.length < minTitleLength || titleInputValue.length > maxTitleLength
+  const isTaskTitleLengthNotValid =
+    titleInputValue.length < minTitleLength || titleInputValue.length > maxTitleLength || disabled
 
   const setTitleInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     error && setError(false)
@@ -41,12 +48,11 @@ export const CreateItemForm = ({ createTitle, minTitleLength = 3, maxTitleLength
         }}
         helperText={error && "enter valid title"}
         error={error}
+        disabled={disabled}
       />
       <IconButton disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
         <AddCircleOutlineOutlinedIcon />
       </IconButton>
-      {/*{error && <div style={{color: "red"}}>enter valid title</div>}*/}
-      {/*<button>+</button>*/}
       {error || (titleInputValue.length < minTitleLength && <p>min title length is {minTitleLength} chars</p>)}
       {titleInputValue.length >= minTitleLength && titleInputValue.length <= maxTitleLength && (
         <p> max title length is {maxTitleLength} chars</p>
