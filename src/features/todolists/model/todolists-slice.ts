@@ -1,4 +1,5 @@
-import { setAppStatusAC } from "@/app/app-slice"
+import { setAppErrorAC, setAppStatusAC } from "@/app/app-slice"
+import { ResultCode } from "@/common/enum/enum"
 import type { RequestStatus } from "@/common/types"
 import { createAppSlice } from "@/common/utils/createAppSlice"
 import { todolistsApi } from "@/features/todolists/api/todolistsApi"
@@ -41,8 +42,15 @@ export const toolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }))
           const res = await todolistsApi.createTodolist(title)
-          dispatch(setAppStatusAC({ status: "succeeded" }))
-          return { todolist: res.data.data.item }
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return { todolist: res.data.data.item }
+          } else {
+            const error = res.data.messages ? res.data.messages[0] : "Something went wrong"
+            dispatch(setAppErrorAC({ error }))
+            dispatch(setAppStatusAC({ status: "failed" }))
+            return rejectWithValue(null)
+          }
         } catch (e) {
           dispatch(setAppStatusAC({ status: "failed" }))
           return rejectWithValue(null)

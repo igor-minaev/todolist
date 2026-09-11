@@ -1,4 +1,5 @@
 import { selectThemeMode } from "@/app/app-slice"
+import { ErrorSnackBar } from "@/common/components"
 import styles from "./App.module.css"
 import { CssBaseline, ThemeProvider } from "@mui/material"
 import { useAppSelector } from "@/common/hooks/useAppSelector"
@@ -18,6 +19,7 @@ function App() {
         <Header />
         <Main />
       </ThemeProvider>
+      <ErrorSnackBar />
     </div>
   )
 }

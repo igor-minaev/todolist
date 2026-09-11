@@ -15,7 +15,7 @@ export const Main = () => {
   return (
     <Container maxWidth={"lg"}>
       <Grid container sx={{ p: "15px 0" }}>
-        <CreateItemForm createTitle={createTodolist} minTitleLength={5} maxTitleLength={20} />
+        <CreateItemForm createTitle={createTodolist} />
       </Grid>
       <Grid container spacing={6}>
         <Todolists />

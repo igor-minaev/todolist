@@ -5,22 +5,12 @@ import TextField from "@mui/material/TextField"
 
 type CreateItemFormPropsType = {
   createTitle: (title: string) => void
-  minTitleLength?: number
-  maxTitleLength?: number
   disabled?: boolean
 }
 
-export const CreateItemForm = ({
-  createTitle,
-  minTitleLength = 3,
-  maxTitleLength = 20,
-  disabled,
-}: CreateItemFormPropsType) => {
+export const CreateItemForm = ({ createTitle, disabled }: CreateItemFormPropsType) => {
   const [titleInputValue, setTitleInputValue] = useState("")
   const [error, setError] = useState(false)
-
-  const isTaskTitleLengthNotValid =
-    titleInputValue.length < minTitleLength || titleInputValue.length > maxTitleLength || disabled
 
   const setTitleInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     error && setError(false)
@@ -44,20 +34,15 @@ export const CreateItemForm = ({
         value={titleInputValue}
         onChange={setTitleInputHandler}
         onKeyDown={(e) => {
-          e.key === "Enter" && !isTaskTitleLengthNotValid && createTitleHandler()
+          e.key === "Enter" && createTitleHandler()
         }}
         helperText={error && "enter valid title"}
         error={error}
         disabled={disabled}
       />
-      <IconButton disabled={isTaskTitleLengthNotValid} onClick={createTitleHandler}>
+      <IconButton disabled={disabled} onClick={createTitleHandler}>
         <AddCircleOutlineOutlinedIcon />
       </IconButton>
-      {error || (titleInputValue.length < minTitleLength && <p>min title length is {minTitleLength} chars</p>)}
-      {titleInputValue.length >= minTitleLength && titleInputValue.length <= maxTitleLength && (
-        <p> max title length is {maxTitleLength} chars</p>
-      )}
-      {titleInputValue.length > maxTitleLength && <p style={{ color: "red" }}>max title is too long</p>}
     </div>
   )
 }
