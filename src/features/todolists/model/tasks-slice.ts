@@ -1,5 +1,8 @@
 import { setAppStatusAC } from "@/app/app-slice"
+import { ResultCode } from "@/common/enum/enum"
 import { createAppSlice } from "@/common/utils/createAppSlice"
+import { catchError } from "@/common/utils/errorCatch"
+import { resultCodeError } from "@/common/utils/resultCodeError"
 import { tasksApi } from "@/features/todolists/api/tasksApi"
 import type { DomainTask, UpdateTaskModel } from "@/features/todolists/api/tasksApi.types"
 import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
@@ -31,11 +34,18 @@ export const tasksSlice = createAppSlice({
       },
     ),
     deleteTaskTC: create.asyncThunk(
-      async (arg: { todolistId: string; taskId: string }, { rejectWithValue }) => {
+      async (arg: { todolistId: string; taskId: string }, { dispatch, rejectWithValue }) => {
         try {
-          await tasksApi.deleteTask(arg)
-          return arg
-        } catch (e) {
+          const res = await tasksApi.deleteTask(arg)
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return arg
+          } else {
+            resultCodeError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          catchError(error, dispatch)
           return rejectWithValue(null)
         }
       },
@@ -50,11 +60,18 @@ export const tasksSlice = createAppSlice({
       },
     ),
     createTaskTC: create.asyncThunk(
-      async (arg: { title: string; todolistId: string }, { rejectWithValue }) => {
+      async (arg: { title: string; todolistId: string }, { dispatch, rejectWithValue }) => {
         try {
           const res = await tasksApi.createTask(arg)
-          return { task: res.data.data.item }
-        } catch (e) {
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return { task: res.data.data.item }
+          } else {
+            resultCodeError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          catchError(error, dispatch)
           return rejectWithValue(null)
         }
       },
@@ -77,10 +94,15 @@ export const tasksSlice = createAppSlice({
             deadline: task.deadline,
           }
           const res = await tasksApi.updateTask({ todolistId: task.todoListId, taskId: task.id, model })
-          dispatch(setAppStatusAC({ status: "succeeded" }))
-          return { task: res.data.data.item }
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: "failed" }))
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return { task: res.data.data.item }
+          } else {
+            resultCodeError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          catchError(error, dispatch)
           return rejectWithValue(null)
         }
       },

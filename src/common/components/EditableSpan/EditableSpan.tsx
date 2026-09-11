@@ -5,11 +5,15 @@ type EditableSpanPropsTitle = {
   title: string
   editeItemTitle: (editedItemTitle: string) => void
   spanClassName?: string
+  disabled?: boolean
 }
-export const EditableSpan = ({ title, editeItemTitle, spanClassName }: EditableSpanPropsTitle) => {
+export const EditableSpan = ({ title, editeItemTitle, spanClassName, disabled }: EditableSpanPropsTitle) => {
   const [isEdit, setIsEdit] = useState(false)
   const [itemTitle, setItemTitle] = useState(title)
-  const onEdit = () => setIsEdit(true)
+  const onEdit = () => {
+    if (disabled) return
+    setIsEdit(true)
+  }
   const offEdit = () => {
     editeItemTitle(itemTitle)
     setIsEdit(false)

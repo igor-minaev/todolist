@@ -24,7 +24,7 @@ export const TodolistTitle = ({ todolist }: PropsType) => {
 
   return (
     <Typography align="center" variant="h5" sx={{ fontWeight: "bold" }}>
-      <EditableSpan title={title} editeItemTitle={changeTodolistTitleHandler} />
+      <EditableSpan title={title} editeItemTitle={changeTodolistTitleHandler} disabled={entityStatus === "loading"} />
       <IconButton onClick={deleteTodolistHandler} disabled={entityStatus === "loading"}>
         <HighlightOffIcon />
       </IconButton>

@@ -1,7 +1,9 @@
-import { setAppErrorAC, setAppStatusAC } from "@/app/app-slice"
+import { setAppStatusAC } from "@/app/app-slice"
 import { ResultCode } from "@/common/enum/enum"
 import type { RequestStatus } from "@/common/types"
 import { createAppSlice } from "@/common/utils/createAppSlice"
+import { catchError } from "@/common/utils/errorCatch"
+import { resultCodeError } from "@/common/utils/resultCodeError"
 import { todolistsApi } from "@/features/todolists/api/todolistsApi"
 import type { Todolist } from "@/features/todolists/api/todolistsApi.types"
 
@@ -46,13 +48,11 @@ export const toolistsSlice = createAppSlice({
             dispatch(setAppStatusAC({ status: "succeeded" }))
             return { todolist: res.data.data.item }
           } else {
-            const error = res.data.messages ? res.data.messages[0] : "Something went wrong"
-            dispatch(setAppErrorAC({ error }))
-            dispatch(setAppStatusAC({ status: "failed" }))
+            resultCodeError(res.data, dispatch)
             return rejectWithValue(null)
           }
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: "failed" }))
+        } catch (error) {
+          catchError(error, dispatch)
           return rejectWithValue(null)
         }
       },
@@ -67,11 +67,17 @@ export const toolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: "loading" }))
           dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "loading" }))
-          await todolistsApi.deleteTodolist(id)
-          dispatch(setAppStatusAC({ status: "succeeded" }))
-          return { id }
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: "failed" }))
+          const res = await todolistsApi.deleteTodolist(id)
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return { id }
+          } else {
+            resultCodeError(res.data, dispatch)
+            dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "failed" }))
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          catchError(error, dispatch)
           dispatch(changeTodolistEntityStatusAC({ id, entityStatus: "failed" }))
           return rejectWithValue(null)
         }
@@ -89,11 +95,16 @@ export const toolistsSlice = createAppSlice({
       async (args: { id: string; title: string }, { dispatch, rejectWithValue }) => {
         try {
           dispatch(setAppStatusAC({ status: "loading" }))
-          await todolistsApi.changeTodolistTitle(args)
-          dispatch(setAppStatusAC({ status: "succeeded" }))
-          return args
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: "failed" }))
+          const res = await todolistsApi.changeTodolistTitle(args)
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatusAC({ status: "succeeded" }))
+            return args
+          } else {
+            resultCodeError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          catchError(error, dispatch)
           return rejectWithValue(null)
         }
       },
